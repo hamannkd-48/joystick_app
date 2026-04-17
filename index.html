@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Assistive Joystick - Tremor-Compensated Mouse Controller</title>
+  <link rel="stylesheet" href="/css/landing.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/>
+          <circle cx="12" cy="12" r="3"/>
+          <line x1="12" y1="2" x2="12" y2="5"/>
+          <line x1="12" y1="19" x2="12" y2="22"/>
+          <line x1="2" y1="12" x2="5" y2="12"/>
+          <line x1="19" y1="12" x2="22" y2="12"/>
+        </svg>
+        <span>Assistive Joystick</span>
+      </div>
+      <div class="nav-links">
+        <a href="#features">Features</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#profiles">Profiles</a>
+        <a href="app.html" class="btn btn-sm">Launch App</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">Open Source Assistive Technology</div>
+      <h1>Precision Control<br/>for Every Hand</h1>
+      <p class="hero-sub">
+        A tremor-compensated joystick mouse controller built on Arduino Leonardo.
+        Configure, calibrate, and test -- all from your browser.
+      </p>
+      <div class="hero-actions">
+        <a href="app.html" class="btn btn-lg btn-primary">Launch Web App</a>
+        <a href="#how-it-works" class="btn btn-lg btn-outline">Learn More</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat">
+          <span class="stat-num">5</span>
+          <span class="stat-label">Tremor Profiles</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">100Hz</span>
+          <span class="stat-label">Sample Rate</span>
+        </div>
+        <div class="stat">
+          <span class="stat-num">&lt;10ms</span>
+          <span class="stat-label">Latency</span>
+        </div>
+      </div>
+    </div>
+    <!-- Animated joystick graphic -->
+    <div class="hero-visual">
+      <div class="joystick-graphic">
+        <div class="joystick-base">
+          <div class="joystick-ring"></div>
+          <div class="joystick-stick">
+            <div class="joystick-knob"></div>
+          </div>
+        </div>
+        <div class="signal-lines">
+          <div class="signal-line s1"></div>
+          <div class="signal-line s2"></div>
+          <div class="signal-line s3"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section id="features" class="section">
+    <div class="section-inner">
+      <h2>Built for Accessibility</h2>
+      <p class="section-sub">Every feature designed to give users with tremors confident, precise computer control.</p>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+              <path d="M2 17l10 5 10-5"/>
+              <path d="M2 12l10 5 10-5"/>
+            </svg>
+          </div>
+          <h3>Adaptive Filtering</h3>
+          <p>1 Euro Filter with median spike removal adapts in real-time to your movement speed -- smooth when idle, responsive when intentional.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="3"/>
+              <path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+            </svg>
+          </div>
+          <h3>Auto-Calibration</h3>
+          <p>Automatic center recalibration detects when the stick is still and corrects drift -- plus manual center and range calibration.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="2" y="3" width="20" height="14" rx="2"/>
+              <path d="M8 21h8M12 17v4"/>
+            </svg>
+          </div>
+          <h3>Browser-Based Config</h3>
+          <p>No software install needed. Connect via Web Serial, adjust profiles, remap buttons, and upload -- all in your browser.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
+              <path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
+            </svg>
+          </div>
+          <h3>Expandable I/O</h3>
+          <p>Add micro switches, buttons, IR sensors, or sip-puff interfaces. Map any input to any function.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/>
+              <path d="M3.27 6.96L12 12.01l8.73-5.05M12 22.08V12"/>
+            </svg>
+          </div>
+          <h3>Live Testing</h3>
+          <p>Built-in snake game and interactive button map let you verify everything works before you rely on it.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/>
+            </svg>
+          </div>
+          <h3>Cloud Save</h3>
+          <p>Sign in with Google to save your configuration. Your profiles, mappings, and calibration persist across sessions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how-it-works" class="section section-dark">
+    <div class="section-inner">
+      <h2>How It Works</h2>
+      <p class="section-sub">Three steps from unboxing to full mouse control.</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Wire</h3>
+          <p>Connect the joystick, safety jumper, and any extra buttons to your Arduino Leonardo. The app shows you exactly what goes where.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Configure</h3>
+          <p>Choose a tremor profile, remap buttons, add sensors. Upload your config directly from the browser or export the sketch for Arduino IDE.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Test</h3>
+          <p>Play the built-in snake game to verify cursor control. Watch the live button map to confirm every input fires correctly.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROFILES -->
+  <section id="profiles" class="section">
+    <div class="section-inner">
+      <h2>Tremor Profiles</h2>
+      <p class="section-sub">Pre-tuned for common tremor severities. Fine-tune any parameter live.</p>
+      <div class="profiles-table">
+        <div class="profile-row profile-header">
+          <span>Profile</span>
+          <span>Smoothing</span>
+          <span>Deadzone</span>
+          <span>Best For</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-name">1 - Steady</span>
+          <span>Minimal</span>
+          <span>Small (8)</span>
+          <span>No tremor, full responsiveness</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-name">2 - Mild</span>
+          <span>Light</span>
+          <span>Small (12)</span>
+          <span>Slight hand shake, good control</span>
+        </div>
+        <div class="profile-row highlight">
+          <span class="profile-name">3 - Moderate <span class="badge">Default</span></span>
+          <span>Medium</span>
+          <span>Medium (16)</span>
+          <span>Noticeable tremor, balanced feel</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-name">4 - Heavy</span>
+          <span>Heavy</span>
+          <span>Large (20)</span>
+          <span>Significant tremor or fatigue</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-name">5 - Severe</span>
+          <span>Maximum</span>
+          <span>Extra Large (26)</span>
+          <span>Severe tremor / withdrawal</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section section-cta">
+    <div class="section-inner">
+      <h2>Ready to Get Started?</h2>
+      <p>Connect your Arduino Leonardo and launch the web app.</p>
+      <a href="app.html" class="btn btn-lg btn-primary">Launch Web App</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <p>Assistive Joystick Project &middot; Open Source &middot; Built with care for accessibility</p>
+      <p class="footer-tech">Arduino Leonardo &middot; Web Serial API &middot; Firebase</p>
+    </div>
+  </footer>
+</body>
+</html>
