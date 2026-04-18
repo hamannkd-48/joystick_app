@@ -1,14 +1,14 @@
 /* ============================================================
    APP STYLES - Assistive Joystick
    ============================================================ */
-/*:root {
+:root {
   --bg: #0a0a0f;
-  --bg-card: #12121a;
+  --bg-card: /*#12121a*/rgba(31, 41, 55, .8);
   --bg-dark: #08080d;
   --surface: #1a1a26;
   --surface-hover: #22222e;
-  --border: #2a2a3a;
-  --border-active: #4a4a5a;
+  --border: #21212e;
+  --border-active: #3e3e4b;
   --text: #e8e8f0;
   --text-dim: #8888a0;
   --text-muted: #555568;
@@ -25,9 +25,9 @@
   --radius: 12px;
   --radius-sm: 8px;
   --radius-xs: 4px;
-}*/
+}
 
-:root {
+/*:root {
   --bg: #0a0a0f;
   --bg-card: #1a1213;
   --bg-dark: #0d0808;
@@ -50,7 +50,7 @@
   --radius-sm: 8px;
   --radius-xs: 4px;
   --radius: 12px;
-}
+}*/
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 

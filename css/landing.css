@@ -1,7 +1,7 @@
 /* ============================================================
    LANDING PAGE STYLES - Assistive Joystick
    ============================================================ */
-/*:root {
+:root {
   --bg: #0a0a0f;
   --bg-card: #12121a;
   --bg-dark: #08080d;
@@ -15,7 +15,7 @@
   --green: #22c55e;
   --radius: 12px;
   --radius-sm: 8px;
-}*/
+}
 
 /*:root {
   --bg: #0a0a0f;
@@ -33,6 +33,7 @@
   --radius-sm: 8px;
 }*/
 
+/* RED STYLES
 :root {
   --bg: #0a0a0f;
   --bg-card: #1a1213;
@@ -47,7 +48,7 @@
   --green: #22c55e;
   --radius: 12px;
   --radius-sm: 8px;
-}
+}*/
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
