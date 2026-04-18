@@ -1,7 +1,7 @@
 /* ============================================================
    LANDING PAGE STYLES - Assistive Joystick
    ============================================================ */
-:root {
+/*:root {
   --bg: #0a0a0f;
   --bg-card: #12121a;
   --bg-dark: #08080d;
@@ -12,6 +12,22 @@
   --accent: #6366f1;
   --accent-light: #818cf8;
   --accent-glow: rgba(99, 102, 241, 0.15);
+  --green: #22c55e;
+  --radius: 12px;
+  --radius-sm: 8px;
+}*/
+
+:root {
+  --bg: #0a0a0f;
+  --bg-card: #1a1213;
+  --bg-dark: #0d0808;
+  --surface: #261a1b;
+  --border: #3a2a2d;
+  --text: #f0e8e9;
+  --text-dim: #a0888a;
+  --accent: #87323c;
+  --accent-light: #c7525f;
+  --accent-glow: rgba(241, 99, 118, 0.15);
   --green: #22c55e;
   --radius: 12px;
   --radius-sm: 8px;
@@ -93,7 +109,7 @@ a:hover { color: var(--accent); }
   font-weight: 700;
   font-size: 16px;
 }
-.nav-icon { width: 24px; height: 24px; color: var(--accent); }
+.nav-icon { width: 24px; height: 24px; color: var(--accent-light); }
 .nav-links {
   display: flex;
   align-items: center;
