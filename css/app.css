@@ -91,7 +91,7 @@ body {
   color: var(--text);
   text-decoration: none;
 }
-.topbar-brand svg { width: 20px; height: 20px; color: var(--accent); }
+.topbar-brand svg { width: 20px; height: 20px; color: var(--accent-light); }
 .topbar-sep {
   width: 1px;
   height: 24px;
