@@ -21,5 +21,5 @@
 }
 
 .kb-shortcuts {
-  color: #fff;
+  color: var(--text);
 }
