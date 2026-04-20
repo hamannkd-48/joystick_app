@@ -81,6 +81,7 @@ float cursorAccumX = 0.0, cursorAccumY = 0.0;
 // STATE
 unsigned long lastSampleMs = 0;
 bool prevButton = false;
+bool overrideMouse = false;
 
 %%EXTRA_PINS%%
 
@@ -141,7 +142,7 @@ void loop() {
   filtY = applyDeadzone(filtY, p.deadzone);
 
   // HID Mouse
-  bool mouseEnabled = (digitalRead(PIN_SAFETY) == LOW);
+  bool mouseEnabled = (digitalRead(PIN_SAFETY) == LOW) || overrideMouse;
   if (mouseEnabled) {
     cursorAccumX += (filtX / 100.0) * cursorSpeed;
     cursorAccumY += (filtY / 100.0) * cursorSpeed;
@@ -184,6 +185,7 @@ void handleSerial() {
     else if (c == 's') { cursorSpeed = fmaxf(cursorSpeed - 1.0, 0.5); Serial.println(F(">> Slower")); printSettings(); }
     else if (c == '[') { PROFILES[currentProfile].deadzone = max(PROFILES[currentProfile].deadzone - 2, 0); Serial.println(F(">> Smaller deadzone")); printSettings(); }
     else if (c == ']') { PROFILES[currentProfile].deadzone = min(PROFILES[currentProfile].deadzone + 2, 50); Serial.println(F(">> Bigger deadzone")); printSettings(); }
+    else if (c == 'm') { overrideMouse = !overrideMouse; Serial.print(F(">> OS Mouse Control: ")); Serial.println(overrideMouse ? F("ON") : F("OFF")); printSettings(); }
     else if (c == '?') { printHelp(); }
   }
 }
@@ -279,6 +281,9 @@ const state = {
   nextSensorPin: 4,
   snakeRunning: false,
   snakeScore: 0,
+  virtualMouseRunning: false,
+  virtualMouseX: 0,
+  virtualMouseY: 0,
   dirty: false, // unsaved changes
 };
 
@@ -312,6 +317,22 @@ function onSerialData(line) {
     updateJoystickMockup(x, y, enabled);
     if (state.snakeRunning) {
       updateSnakeDirection(x, y);
+    }
+    if (state.virtualMouseRunning) {
+      // Invert Y axis for typical cursor movement if needed, assuming -y is up
+      // usually Arduino sends positive for right/down? Let's check: 
+      // If +y is up, -= (y) else += (y). Let's use standard += y
+      state.virtualMouseX += (x / 100.0) * state.cursorSpeed;
+      state.virtualMouseY -= (y / 100.0) * state.cursorSpeed; // Subtracted since Y usually goes up from center, but JS Y is flipped
+      
+      state.virtualMouseX = Math.max(0, Math.min(window.innerWidth, state.virtualMouseX));
+      state.virtualMouseY = Math.max(0, Math.min(window.innerHeight, state.virtualMouseY));
+      
+      const cursor = document.getElementById('inAppVirtualCursor');
+      if (cursor) {
+        cursor.style.left = `${state.virtualMouseX}px`;
+        cursor.style.top = `${state.virtualMouseY}px`;
+      }
     }
   }
 }
@@ -363,6 +384,17 @@ function updateJoystickMockup(x, y, enabled) {
   document.getElementById('mockupY').textContent = y;
   document.getElementById('mockupEnabled').textContent = enabled ? 'Yes' : 'No';
   document.getElementById('mockupEnabled').style.color = enabled ? 'var(--green)' : 'var(--red)';
+
+  const overrideBtn = document.getElementById('mouseOverrideBtn');
+  if (overrideBtn) {
+    if (enabled) {
+      overrideBtn.textContent = 'Disable OS Mouse Control';
+      overrideBtn.className = 'btn btn-danger';
+    } else {
+      overrideBtn.textContent = 'Enable OS Mouse Control';
+      overrideBtn.className = 'btn btn-warning';
+    }
+  }
 }
 
 // ============================================================
@@ -744,6 +776,46 @@ const app = {
   },
 
   test: {
+    toggleMouseOverride() {
+      if (!serialManager?.connected) {
+        window.app.toast('Connect Arduino first', 'error');
+        return;
+      }
+      serialManager.send('m');
+      window.app.toast('Toggled OS Mouse Control command sent.', 'success');
+    },
+
+    toggleVirtualMouse() {
+      state.virtualMouseRunning = !state.virtualMouseRunning;
+      const statusEl = document.getElementById('virtualMouseStatus');
+      const btnEl = document.getElementById('virtualMouseBtn');
+      
+      let cursor = document.getElementById('inAppVirtualCursor');
+      if (!cursor) {
+        cursor = document.createElement('div');
+        cursor.id = 'inAppVirtualCursor';
+        cursor.className = 'virtual-cursor';
+        document.body.appendChild(cursor);
+      }
+
+      if (state.virtualMouseRunning) {
+        cursor.style.display = 'block';
+        statusEl.textContent = 'On';
+        statusEl.style.color = 'var(--green)';
+        btnEl.textContent = 'Stop Virtual Mouse';
+        btnEl.className = 'btn btn-danger';
+        // Reset virtual coordinates to screen center
+        state.virtualMouseX = window.innerWidth / 2;
+        state.virtualMouseY = window.innerHeight / 2;
+      } else {
+        cursor.style.display = 'none';
+        statusEl.textContent = 'Off';
+        statusEl.style.color = 'var(--yellow)';
+        btnEl.textContent = 'Start Virtual Mouse';
+        btnEl.className = 'btn btn-primary';
+      }
+    },
+
     startSnake() {
       if (!snakeGame) initSnake();
       if (state.snakeRunning) return;
@@ -992,6 +1064,71 @@ function init() {
     if (state.dirty && !authModule.user) {
       e.preventDefault();
       e.returnValue = 'You have unsaved work! Sign in to save your configuration.';
+    }
+  });
+
+  // Global Keyboard Shortcuts
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+    const key = e.key.toLowerCase();
+
+    // Profiles 1-5
+    if (key >= '1' && key <= '5') {
+      app.configure.setProfile(parseInt(key) - 1);
+      return;
+    }
+
+    const p = PROFILES[state.currentProfile];
+    const sendAndToast = (cmd, msg) => {
+      if (serialManager?.connected) serialManager.send(cmd);
+      window.app.toast(msg, 'success');
+    };
+
+    switch (key) {
+      case '+':
+      case '=':
+        app.configure.updateSmoothing(Math.max(p.minCutoff - 0.25, 0.1));
+        document.getElementById('smoothSlider').value = p.minCutoff;
+        sendAndToast('+', 'More smoothing');
+        break;
+      case '-':
+      case '_':
+        app.configure.updateSmoothing(Math.min(p.minCutoff + 0.25, 10.0));
+        document.getElementById('smoothSlider').value = p.minCutoff;
+        sendAndToast('-', 'Less smoothing');
+        break;
+      case 'f':
+        app.configure.updateSpeed(Math.min(state.cursorSpeed + 1.0, 15.0));
+        document.getElementById('speedSlider').value = state.cursorSpeed;
+        sendAndToast('f', 'Faster cursor');
+        break;
+      case 's':
+        app.configure.updateSpeed(Math.max(state.cursorSpeed - 1.0, 0.5));
+        document.getElementById('speedSlider').value = state.cursorSpeed;
+        sendAndToast('s', 'Slower cursor');
+        break;
+      case '[':
+        app.configure.updateDeadzone(Math.max(p.deadzone - 2, 0));
+        document.getElementById('deadSlider').value = p.deadzone;
+        sendAndToast('[', 'Smaller deadzone');
+        break;
+      case ']':
+        app.configure.updateDeadzone(Math.min(p.deadzone + 2, 50));
+        document.getElementById('deadSlider').value = p.deadzone;
+        sendAndToast(']', 'Bigger deadzone');
+        break;
+      case '0':
+        app.configure.calibrateCenter();
+        break;
+      case 'r':
+        app.configure.calibrateRange();
+        break;
+      case '?':
+      case '/':
+        window.app.toast('Keyboard shortcuts active', 'info');
+        if (serialManager?.connected) serialManager.send('?');
+        break;
     }
   });
 

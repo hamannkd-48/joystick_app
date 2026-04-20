@@ -1,3 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Manrope:wght@200..800&display=swap');
-/* Manrope and DM Sans */
 
+/* Manrope and DM Sans */
+.virtual-cursor {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 24px;
+  height: 24px;
+  background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 0 24 24" fill="white" stroke="black" stroke-width="1.5" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 3.21V20.8l4.45-4.45 3.1 7.14 2.76-1.2-3.1-7.14 6.03-.68L5.5 3.21z"/></svg>');
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 999999;
+  pointer-events: none;
+  /* Let clicks pass through */
+  display: none;
+  /* Hidden by default */
+  transform: translate(-4px, -4px);
+  /* Adjust to make the pointer tip be at the x,y pos */
+  filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.5));
+}
+
+.kb-shortcuts {
+  color: #fff;
+}
