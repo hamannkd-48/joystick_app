@@ -191,6 +191,7 @@ a:hover {
   padding: 100px 24px 60px;
   position: relative;
   overflow: hidden;
+  background-color: var(--bg-dark);
 }
 
 .hero::before {
@@ -545,7 +546,7 @@ a:hover {
   padding: 2px 8px;
   border-radius: 4px;
   background: var(--accent);
-  color: white;
+  color: var(--bg);
   font-size: 11px;
   font-weight: 700;
   margin-left: 8px;
