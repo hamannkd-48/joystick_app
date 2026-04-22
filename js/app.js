@@ -794,7 +794,10 @@ const app = {
     },
 
     syncSensorsToArduino() {
-      if (!serialManager?.connected) return;
+      if (!serialManager?.connected) {
+        window.app.toast('Connect your Arduino first to sync settings', 'error');
+        return;
+      }
       
       const ACTION_CODES = {
         mouse_left: 1, mouse_right: 2, mouse_middle: 3,
@@ -816,6 +819,11 @@ const app = {
             serialManager.send('A' + pinNum + ',' + action);
           }, i * 50);
         });
+        
+        const delay = Math.max(state.sensors.length * 50, 50);
+        setTimeout(() => {
+           window.app.toast('Configuration successfully synced to Arduino!', 'success');
+        }, delay);
       }, 50);
     },
 
