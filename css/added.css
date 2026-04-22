@@ -23,3 +23,10 @@
 .kb-shortcuts {
   color: var(--text);
 }
+
+.stepflex {
+  display:flex;
+  justify-content:center;
+  align-items: center;
+  gap:15px;
+}
