@@ -394,7 +394,7 @@ a:hover {
   padding: 100px 24px;
 }
 
-section#brand {padding-top:50px;} 
+section#brand, section#features, section#how-it-works, section#profiles, section#about {padding-top:50px;} 
 
 .section-dark {
   background: var(--bg-dark);

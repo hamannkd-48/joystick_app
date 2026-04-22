@@ -119,12 +119,13 @@ void executeAction(uint8_t code, bool press) {
 
 void loadConfig() {
   EEPROM.get(0, config);
-  if (config.magic != 0x42) {
-    config.magic = 0x42;
-    config.profile = 2; // Moderate
-    config.speed = 4.0;
-    config.mainButtonAction = 1; // Left click
-    config.sensorCount = 0;
+  if (config.magic != %%MAGIC%%) {
+    config.magic = %%MAGIC%%;
+    config.profile = %%PROFILE%%;
+    config.speed = %%SPEED%%;
+    config.mainButtonAction = %%MAIN_ACTION%%;
+    config.sensorCount = %%SENSOR_COUNT%%;
+%%SENSOR_CONFIGS%%
     EEPROM.put(0, config);
   }
 }
@@ -1023,7 +1024,31 @@ function renderComponents() {
 }
 
 function generateSketch() {
-  return SKETCH_TEMPLATE;
+  let code = SKETCH_TEMPLATE;
+  // Generate a random magic byte (16-254) so EEPROM updates when flashed via IDE
+  const magic = Math.floor(Math.random() * 238) + 16;
+  code = code.replace(/%%MAGIC%%/g, '0x' + magic.toString(16));
+  code = code.replace(/%%PROFILE%%/g, String(state.currentProfile));
+  code = code.replace(/%%SPEED%%/g, state.cursorSpeed.toFixed(1));
+
+  const ACTION_CODES = {
+    mouse_left: 1, mouse_right: 2, mouse_middle: 3,
+    key_enter: 4, key_space: 5, key_esc: 6
+  };
+  const mainAction = ACTION_CODES[state.buttonMappings.joystick_click] || 1;
+  code = code.replace(/%%MAIN_ACTION%%/g, String(mainAction));
+  code = code.replace(/%%SENSOR_COUNT%%/g, String(state.sensors.length));
+
+  let sensorConfigs = '';
+  state.sensors.forEach((s, i) => {
+    const pinNum = parseInt(s.pin.replace('D', ''));
+    const action = ACTION_CODES[state.buttonMappings[s.id] || 'mouse_left'];
+    sensorConfigs += `    config.sensors[${i}].pin = ${pinNum};\n`;
+    sensorConfigs += `    config.sensors[${i}].actionCode = ${action};\n`;
+  });
+  code = code.replace(/%%SENSOR_CONFIGS%%/g, sensorConfigs);
+
+  return code;
 }
 
 function markDirty() {
