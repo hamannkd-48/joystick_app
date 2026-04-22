@@ -652,6 +652,15 @@ function pollGamepads() {
         if (Math.abs(lx) > 0.1 || Math.abs(ly) > 0.1) activeCount++;
       }
 
+      // Feed joystick visualization when not receiving serial data
+      if (!serialManager?.connected) {
+        updateJoystickMockup(
+          Math.round(lx * 100),
+          Math.round(ly * 100),
+          0 // enabled state unknown without serial
+        );
+      }
+
       // Use left stick for snake if connected
       if (state.snakeRunning && snakeGame) {
         const threshold = 0.3;
@@ -1133,6 +1142,9 @@ function init() {
 
   // Init snake
   initSnake();
+
+  // Init joystick mockup cursor to center position
+  updateJoystickMockup(0, 0, 0);
 
   // Start gamepad polling
   startGamepadPolling();
