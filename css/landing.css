@@ -18,17 +18,21 @@
 }*/
 
 :root {
-  --bg: #1e293b;
-  --bg-card: #334155;
-  --bg-dark: #0f172a;
-  --surface: #475569;
-  --border: #475569;
-  --text: #f8fafc;
-  --text-dim: #cbd5e1;
-  --accent: #fce205;
-  --accent-light: #fff200;
-  --accent-glow: rgba(252, 226, 5, 0.15);
-  --green: #22c55e;
+  /* Backgrounds: warm charcoal-brown — neutral, not blue, not green */
+  --bg: #2b2720;
+  --bg-card: #37322a;
+  --bg-dark: #1e1b15;
+  --surface: #44403a;
+  --border: #5c574f;
+  /* Text: warm off-whites */
+  --text: #f0ebe2;
+  --text-dim: #b0a898;
+  /* Accent: sage green — pops against the warm neutral BG */
+  --accent: #7db891;
+  --accent-light: #9dd1ac;
+  --accent-glow: rgba(125, 184, 145, 0.18);
+  /* Complementary: a brighter fresh green for positive indicators */
+  --green: #6ab87e;
   --radius: 12px;
   --radius-sm: 8px;
 }
@@ -109,7 +113,7 @@ a:hover {
 .btn-primary {
   background: var(--accent);
   border-color: var(--accent);
-  color: #0f172a;
+  color: #1a2e20;
 }
 
 .btn-primary:hover {
@@ -137,7 +141,7 @@ a:hover {
   left: 0;
   right: 0;
   z-index: 100;
-  background: rgba(30, 41, 59, 0.85);
+  background: rgba(30, 27, 21, 0.90);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
 }
@@ -218,12 +222,12 @@ a:hover {
   padding: 6px 16px;
   border-radius: 20px;
   background: var(--accent-glow);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  border: 1px solid rgba(125, 184, 145, 0.40);
   color: var(--accent-light);
   font-size: 13px;
   font-weight: 600;
   margin-bottom: 24px;
-  margin-top:10px;
+  margin-top: 10px;
 }
 
 .hero h1 {
@@ -394,7 +398,13 @@ a:hover {
   padding: 100px 24px;
 }
 
-section#brand, section#features, section#how-it-works, section#profiles, section#about {padding-top:50px;} 
+section#brand,
+section#features,
+section#how-it-works,
+section#profiles,
+section#about {
+  padding-top: 50px;
+}
 
 .section-dark {
   background: var(--bg-dark);
@@ -497,7 +507,7 @@ section#brand, section#features, section#how-it-works, section#profiles, section
 .step h3 {
   font-size: 20px;
   font-weight: 700;
-  padding-bottom:7px;
+  padding-bottom: 7px;
   margin-bottom: 10px;
 }
 
@@ -538,7 +548,7 @@ section#brand, section#features, section#how-it-works, section#profiles, section
 
 .profile-row.highlight {
   background: var(--accent-glow);
-  border-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(125, 184, 145, 0.30);
 }
 
 .profile-name {
