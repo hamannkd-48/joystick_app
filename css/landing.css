@@ -446,7 +446,9 @@ section#about {
   border-color: var(--accent);
 }
 
-.feature-card:hover {}
+.feature-card:hover {
+  border-color: var(--accent-light);
+}
 
 .feature-icon {
   width: 44px;

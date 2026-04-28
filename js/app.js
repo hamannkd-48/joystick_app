@@ -314,7 +314,7 @@ const BUTTON_ACTIONS = {
 // ============================================================
 const state = {
   currentProfile: 2,
-  cursorSpeed: 4.0,
+  cursorSpeed: 3.0,
   sensors: [],
   buttonMappings: { joystick_click: 'mouse_left' },
   nextSensorPin: 4,
@@ -1192,12 +1192,12 @@ function init() {
         sendAndToast('-', 'Less smoothing');
         break;
       case 'f':
-        app.configure.updateSpeed(Math.min(state.cursorSpeed + 1.0, 15.0));
+        app.configure.updateSpeed(Math.min(state.cursorSpeed + 0.5, 12.0));
         document.getElementById('speedSlider').value = state.cursorSpeed;
         sendAndToast('f', 'Faster cursor');
         break;
       case 's':
-        app.configure.updateSpeed(Math.max(state.cursorSpeed - 1.0, 0.5));
+        app.configure.updateSpeed(Math.max(state.cursorSpeed - 0.5, 0.5));
         document.getElementById('speedSlider').value = state.cursorSpeed;
         sendAndToast('s', 'Slower cursor');
         break;
